@@ -2,8 +2,8 @@
   <div id="about-body">
     <div id="about-text">A simple task manager project created for learning purposes, by Dre Dawkins.</div>
     <br />
-    <a id="repo1" href="https://github.com/dredawkins11/task-manager-project-frontend" target="_blank">Frontend repository</a>
-    <a id="repo2" href="https://github.com/dredawkins11/task-manager-project-backend" target="_blank">Backend repository</a>
+    <a id="repo1" href="https://github.com/dredawkins11/task-manager-frontend" target="_blank">Frontend repository</a>
+    <a id="repo2" href="https://github.com/dredawkins11/task-manager-backend" target="_blank">Backend repository</a>
     <router-link id="back-link" to="/">Back to Task Manager</router-link>
   </div>
 </template>

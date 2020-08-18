@@ -8,7 +8,6 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "deploy": "aws s3 sync ./dist s3://task-manager-project-frontend"
-    
   },
   "dependencies": {
     "axios": "^0.19.2",
