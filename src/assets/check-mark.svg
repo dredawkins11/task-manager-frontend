@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="205.476 138.069 187.522 155.098" xmlns="http://www.w3.org/2000/svg">
+  <rect x="205.476" y="138.069" width="187.522" height="155.098" rx="5" ry="5" style="fill: rgba(216, 216, 216, 0);"/>
+  <polyline style="fill: rgb(216, 216, 216); fill-opacity: 0; stroke-linejoin: round; stroke-linecap: round; stroke: rgb(0, 0, 0); stroke-width: 31px;" points="227.747 233.301 292.629 276.12 366.772 155.976" transform="matrix(0.997392, 0.072171, -0.072171, 0.997392, 16.367646, -20.890208)"/>
+  <polyline style="fill: rgb(216, 216, 216); fill-opacity: 0; stroke-linejoin: round; stroke-width: 25px; stroke-linecap: round; stroke: rgb(36, 134, 255);" points="227.635 233.309 292.512 276.132 366.65 155.975" transform="matrix(0.997392, 0.072171, -0.072171, 0.997392, 16.367737, -20.88175)"/>
+</svg>

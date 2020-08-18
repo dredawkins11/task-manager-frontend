@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="71.365 171.684 257.033 256.442" xmlns="http://www.w3.org/2000/svg">
+  <g transform="matrix(1, 0, 0, 1, -303.109013, 10.459992)">
+    <line style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke-width: 54px; stroke: rgb(0, 0, 0);" x1="403.109" y1="389.54" x2="603.109" y2="189.54"/>
+    <line style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke-width: 54px; stroke: rgb(0, 0, 0);" x1="403.109" y1="189.54" x2="603.109" y2="389.54"/>
+  </g>
+  <g>
+    <line style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke: rgb(36, 134, 255); stroke-width: 43px;" x1="100" y1="400" x2="300" y2="200"/>
+    <line style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke: rgb(36, 134, 255); stroke-width: 43px;" x1="100" y1="200" x2="300" y2="400"/>
+  </g>
+  <rect x="71.365" y="171.684" width="257.033" height="256.442" rx="5" ry="5" style="fill: none;"/>
+</svg>
