@@ -306,4 +306,11 @@
   *:focus {
     outline: none;
   }
+
+  @media screen and (max-width: 600px) {
+    .task-box {
+      width: 230px;
+      height: 200px;
+    }
+  }
 </style>

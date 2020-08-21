@@ -46,4 +46,9 @@
       background: $accent;
     }
   }
+  @media screen and (max-width: 350px) {
+    #logout-button {
+      left: 10px;
+    }
+  }
 </style>

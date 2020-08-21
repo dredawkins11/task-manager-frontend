@@ -24,12 +24,6 @@
       LoginBox,
     },
     computed: mapGetters(["allTasks", "appState"]),
-    data() {
-      return {
-        tasks: [],
-        user: {},
-      };
-    },
     methods: {
       ...mapActions(["fetchTasks", "fetchUser"]),
     },

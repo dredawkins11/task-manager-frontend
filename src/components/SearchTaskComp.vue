@@ -103,4 +103,12 @@
       margin-left: -15px;
     }
   }
+  @media screen and (max-width: 350px) {
+    #search-container {
+      width: 250px;
+    }
+    #clear-search {
+      margin-left: -20px;
+    }
+  }
 </style>

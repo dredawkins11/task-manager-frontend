@@ -95,4 +95,24 @@ export default {
       color: $accent;
     }
   }
+  @media screen and (max-width: 350px) {
+    #menu-body {
+      width: 200px;
+      height: 90px;
+    }
+    #prof-icon {
+      display: none;
+    }
+    #username-text {
+      left: 10px;
+      top: 30px;
+    }
+    #username-label {
+      top: 10px;
+      left: 10px;
+    }
+    #about-link {
+      right: 15px;
+    }
+  }
 </style>

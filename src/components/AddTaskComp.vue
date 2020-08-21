@@ -128,4 +128,9 @@
       width: 300px;
     }
   }
+  @media screen and (max-width: 350px) {
+    #add-task-container {
+      width: 200px;
+    }
+  }
 </style>
