@@ -1,11 +1,6 @@
 <template>
   <div id="search-container">
-    <input
-      id="search-input"
-      type="text"
-      placeholder="Search for task..."
-      v-on:keyup.enter="searchE()"
-    />
+    <input id="search-input" type="text" placeholder="Search for task..." v-on:keyup.enter="searchE()" />
     <div id="search-button" @click="searchE()">GO</div>
     <div id="clear-search" @click="clearSearchE()">X</div>
   </div>
@@ -24,7 +19,7 @@
         document.getElementById("search-input").value = "";
       },
       clearSearchE() {
-        document.getElementById("search-input").value = ""
+        document.getElementById("search-input").value = "";
         this.$root.$emit("refreshTasks");
       },
     },
@@ -72,7 +67,7 @@
     color: $lightText;
     background-color: $primary;
     cursor: pointer;
-    transition: background .2s;
+    transition: background 0.2s;
 
     &:hover {
       background: $accent;

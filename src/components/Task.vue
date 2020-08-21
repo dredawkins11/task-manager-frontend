@@ -54,7 +54,7 @@
       ...mapActions(["deleteTask"]),
       async markComplete(task) {
         try {
-          if (this.isTokenExpired()) await this.refreshToken()
+          if (this.isTokenExpired()) await this.refreshToken();
           await axios.put(`${this.$backendAddress}/api/tasks/${task._id}`, {
             completed: !task.completed,
             title: task.title,
@@ -75,7 +75,7 @@
         task.description = descriptionEdit.value ? descriptionEdit.value : " ";
 
         try {
-          if (this.isTokenExpired()) await this.refreshToken()
+          if (this.isTokenExpired()) await this.refreshToken();
           await axios.put(`${this.$backendAddress}/api/tasks/${task._id}`, {
             completed: task.completed,
             title: task.title,
@@ -99,9 +99,9 @@
         }
       },
       isTokenExpired() {
-        const token = sessionStorage.getItem("accessToken")
-        const expireTime = JSON.parse(atob(token.split('.')[1])).exp
-        return expireTime <= (Date.now()/1000) 
+        const token = sessionStorage.getItem("accessToken");
+        const expireTime = JSON.parse(atob(token.split(".")[1])).exp;
+        return expireTime <= Date.now() / 1000;
       },
       getDate(task) {
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -143,12 +143,12 @@
     border-radius: 10px;
     color: $darkText;
     background-color: $backgroundDark;
-    transition: background .2s, border-color .2s, box-shadow .2s;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
 
     &:hover {
       background: $accent;
       border-color: $accent;
-      box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.5)
+      box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
     }
     .title {
       position: absolute;
@@ -231,7 +231,7 @@
       height: 20px;
       margin: 0;
       border: 1px solid $darkText;
-      transition: transform .1s;
+      transition: transform 0.1s;
 
       &:hover {
         cursor: pointer;
@@ -248,11 +248,11 @@
       height: 20px;
       font-size: 20px;
       text-align: center;
-      transition: transform .1s;
+      transition: transform 0.1s;
 
       g:nth-of-type(2) line {
         stroke: white;
-        transition: stroke .1s;
+        transition: stroke 0.1s;
       }
 
       &:hover {

@@ -12,18 +12,18 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+  import { mapActions } from "vuex";
 
-export default {
-  name: 'SortTaskComp',
-  methods: {
-    ...mapActions(['sortTasks']),
-    sortEvent() {
-      const type = document.getElementById('sort-dropdown').value
-      this.sortTasks(type)
+  export default {
+    name: "SortTaskComp",
+    methods: {
+      ...mapActions(["sortTasks"]),
+      sortEvent() {
+        const type = document.getElementById("sort-dropdown").value;
+        this.sortTasks(type);
+      },
     },
-  },
-}
+  };
 </script>
 
 <style scoped lang="scss">
@@ -53,7 +53,7 @@ export default {
     border: 2px solid $darkText;
     color: $lightText;
     background-color: $primary;
-    transition: background .2s;
+    transition: background 0.2s;
 
     &:hover {
       cursor: pointer;

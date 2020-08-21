@@ -1,18 +1,8 @@
 <template>
   <div id="add-task-container">
-      <input
-        type="text"
-        id="add-task-title"
-        placeholder="Task title..."
-        v-on:keyup.enter="focusOnDesc()"
-      />
-      <textarea
-        type="text"
-        id="add-task-desc"
-        placeholder="Task Description..."
-        v-on:keyup.enter="addTaskE()"
-      />
-      <div id="add-button" @click="addTaskE()">+</div>
+    <input type="text" id="add-task-title" placeholder="Task title..." v-on:keyup.enter="focusOnDesc()" />
+    <textarea type="text" id="add-task-desc" placeholder="Task Description..." v-on:keyup.enter="addTaskE()" />
+    <div id="add-button" @click="addTaskE()">+</div>
   </div>
 </template>
 
@@ -29,14 +19,12 @@
     methods: {
       ...mapActions(["addTask"]),
       addTaskE() {
-        const userId = JSON.parse(
-          atob(sessionStorage.getItem("accessToken").split(".")[1])
-        ).id;
+        const userId = JSON.parse(atob(sessionStorage.getItem("accessToken").split(".")[1])).id;
 
         const title = document.getElementById("add-task-title").value;
         let description = document.getElementById("add-task-desc").value;
 
-        if (title.length < 3) return alert("Task title must be at least 3 characters long.")
+        if (title.length < 3) return alert("Task title must be at least 3 characters long.");
         if (!description) description = " ";
 
         this.addTask({ title, description, userId, createdAt: new Date().toString() });
@@ -45,14 +33,13 @@
         document.getElementById("add-task-desc").value = "";
       },
       focusOnDesc() {
-        document.getElementById('add-task-desc').focus()
-      }
+        document.getElementById("add-task-desc").focus();
+      },
     },
   };
 </script>
 
 <style scoped lang="scss">
-
   #add-task-container {
     position: absolute;
     left: 75px;
@@ -100,13 +87,13 @@
     line-height: 28px;
     font-weight: bolder;
     font-size: 40px;
-    border: 2px solid $darkText; 
+    border: 2px solid $darkText;
     color: $lightText;
     background-color: $primary;
-    transition: background .2s;
+    transition: background 0.2s;
 
     &:hover {
-      background: $accent
+      background: $accent;
     }
   }
   #add-button:hover {

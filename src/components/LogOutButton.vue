@@ -6,8 +6,8 @@
 
 <script>
   import { mapActions } from "vuex";
-  import axios from "axios"
-  
+  import axios from "axios";
+
   export default {
     name: "LogOutButton",
     methods: {
@@ -40,7 +40,7 @@
     line-height: 1.3rem;
     color: $lightText;
     background-color: $primary;
-    transition: background .2s;
+    transition: background 0.2s;
 
     &:hover {
       background: $accent;

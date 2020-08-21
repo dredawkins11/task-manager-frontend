@@ -34,57 +34,55 @@
     },
     mounted() {
       this.$root.$on("refreshTasks", async () => await this.fetchTasks());
-      console.log(process.env.NODE_ENV)
+      console.log(process.env.NODE_ENV);
     },
   };
 </script>
 
 <style lang="scss">
-
-html, body {
-  position: relative;
-  z-index: -3;
-  margin: 0;
-  width: 100vw;
-  height: 100vh;
-  background: $backgroundLight;
-}
-
-.blur {
-  animation: blur-in .75s;
-  animation-fill-mode: forwards;
-}
-#main {
-  position: relative;
-
-}
-#task-page {
-  position: absolute;
-  top: 25px;
-  left: 100px;
-  right: 25px;
-  z-index: -2;
-  height: calc(100vh - 25px);
-  white-space: nowrap;
-}
-#log-out-comp {
-  display: inline-block;
-}
-#add-task-comp {
-  display: inline-block;
-  width: 1200px;
-}
-#sort-button-comp {
-  display: inline-block;
-}
-@keyframes blur-in {
-  from {
-    filter: blur(0px);
+  html,
+  body {
+    position: relative;
+    z-index: -3;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background: $backgroundLight;
   }
-  
-  to {
-    filter: blur(5px);
+
+  .blur {
+    animation: blur-in 0.75s;
+    animation-fill-mode: forwards;
   }
-}
+  #main {
+    position: relative;
+  }
+  #task-page {
+    position: absolute;
+    top: 25px;
+    left: 100px;
+    right: 25px;
+    z-index: -2;
+    height: calc(100vh - 25px);
+    white-space: nowrap;
+  }
+  #log-out-comp {
+    display: inline-block;
+  }
+  #add-task-comp {
+    display: inline-block;
+    width: 1200px;
+  }
+  #sort-button-comp {
+    display: inline-block;
+  }
+  @keyframes blur-in {
+    from {
+      filter: blur(0px);
+    }
+
+    to {
+      filter: blur(5px);
+    }
+  }
 </style>
-

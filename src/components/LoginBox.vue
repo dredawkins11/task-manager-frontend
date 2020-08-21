@@ -1,14 +1,14 @@
 <template>
   <div>
     <div id="blur-panel"></div>
-      <RegisterBox v-if="appState.register" />
+    <RegisterBox v-if="appState.register" />
     <div id="main-login" v-if="!appState.register">
       <h1 style="margin-top:20px;">Login Below</h1>
-      <div id="login-username-label">Username: </div>
-      <input type="text" name="username" id="username-text-login" class="entry" autocomplete="new-password"/>
+      <div id="login-username-label">Username:</div>
+      <input type="text" name="username" id="username-text-login" class="entry" autocomplete="new-password" />
       <br />
-      <div id="login-password-label">Password: </div>
-      <input type="password" name="password" id="password-text-login" class="entry" autocomplete="new-password"/>
+      <div id="login-password-label">Password:</div>
+      <input type="password" name="password" id="password-text-login" class="entry" autocomplete="new-password" />
       <div id="login-button" @click="loginReqE">Login</div>
       <div id="register-text" @click="toggleRegister()">No account? Register <span id="register-link">here.</span></div>
     </div>

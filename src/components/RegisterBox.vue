@@ -3,13 +3,13 @@
     <h1>Register Below</h1>
     <div id="register-username-label">Username:</div>
     <form autocomplete="new-password">
-      <input type="text" name="username" id="username-text-register" class="entry" autocomplete="new-password"/>
+      <input type="text" name="username" id="username-text-register" class="entry" autocomplete="new-password" />
       <br />
       <div id="register-password-label">Password:</div>
-      <input type="password" name="password" id="password-text-register" class="entry" autocomplete="new-password"/>
+      <input type="password" name="password" id="password-text-register" class="entry" autocomplete="new-password" />
       <br />
       <div id="register-password-label2">Repeat Password:</div>
-      <input type="password" name="2nd-password" id="password-text-register2" class="entry" autocomplete="new-password"/>
+      <input type="password" name="2nd-password" id="password-text-register2" class="entry" autocomplete="new-password" />
       <div id="register-button" @click="registerReqE">Register</div>
       <div id="login-text" @click="toggleRegister()">Already have an account? Log in <span id="login-link">here.</span></div>
     </form>

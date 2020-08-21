@@ -1,5 +1,5 @@
 import axios from "axios";
-axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem("accessToken")}`;
+axios.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.getItem("accessToken")}`;
 
 const backendAddress = process.env.NODE_ENV == "production" ? "https://task-manager-backend11.herokuapp.com" : "http://localhost:3000";
 
@@ -14,38 +14,38 @@ const getters = {
 const actions = {
   async initialFetchTasks({ commit }) {
     try {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem("accessToken")}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.getItem("accessToken")}`;
       let res = await axios.get(`${backendAddress}/api/tasks/user`);
       commit("setTasksM", res.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   },
   async fetchTasks({ commit }) {
     try {
-      if (isTokenExpired()) await refreshToken()
+      if (isTokenExpired()) await refreshToken();
       let res = await axios.get(`${backendAddress}/api/tasks/user`);
       commit("setTasksM", res.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   },
   async addTask({ commit }, taskObj) {
     try {
-      if (isTokenExpired()) await refreshToken()
+      if (isTokenExpired()) await refreshToken();
       const res = await axios.post(`${backendAddress}/api/tasks`, taskObj);
       commit("addTaskM", res.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   },
   async deleteTask({ commit }, id) {
     try {
-      if (isTokenExpired()) await refreshToken()
+      if (isTokenExpired()) await refreshToken();
       const res = await axios.delete(`${backendAddress}/api/tasks/${id}`);
       commit("delTaskM", res.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   },
   clearTasks({ commit }) {
@@ -141,14 +141,14 @@ async function refreshToken() {
       token: sessionStorage.getItem("refreshToken"),
     });
     sessionStorage.setItem("accessToken", res.data.accessToken);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem("accessToken")}`;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.getItem("accessToken")}`;
   } catch (err) {
     console.log(err);
   }
 }
 
 function isTokenExpired() {
-  const token = sessionStorage.getItem("accessToken")
-  const expireTime = JSON.parse(atob(token.split('.')[1])).exp
-  return expireTime <= (Date.now()/1000) 
+  const token = sessionStorage.getItem("accessToken");
+  const expireTime = JSON.parse(atob(token.split(".")[1])).exp;
+  return expireTime <= Date.now() / 1000;
 }
