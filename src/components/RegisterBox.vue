@@ -36,7 +36,34 @@
           if (cred.password != password2) return alert("Passwords do not match.");
 
           const { error } = this.validateRegister(cred);
-          if (error) return alert(error.details[0].message);
+          if (error) {
+            const message = error.details[0].message;
+            switch (message) {
+              case `"username" is not allowed to be empty`:
+                alert("Username is required.")
+                break;
+              case `"username" length must be at least 3 characters long`:
+                alert("Your username must be at least 3 characters long.")
+                break;
+              case `"username" length must be less than or equal to 32 characters long`:
+                alert("Your username must be at shorter than 32 characters.")
+                break;
+              case `"password" is not allowed to be empty`:
+                alert("Password is required.");
+                break;
+              case `"password" length must be at least 3 characters long`:
+                alert("Your password must be at least 3 charactoers long.")
+                break;
+              case `"password" length must be less than or equal to 32 characters long`:
+                alert("Your password must be shorter than 32 characters.")
+                break;
+            }
+            if (message.includes("number pattern")) alert("Password must contain at least one number.")
+            if (message.includes("uppercase letter pattern")) alert("Password must contain at least one uppercase letter.")
+            if (message.includes("lowercase letter pattern")) alert("Password must contain at least one lowercase letter.")
+            if (message.includes("alphanumeric pattern")) alert("Username must begin with a letter or number.")
+            return;
+          }
 
           const user = await axios.post(`${this.$backendAddress}/api/users`, cred);
           if (!user.data) return alert("A user with that username already exists.");

@@ -36,7 +36,18 @@
         };
 
         const { error } = this.validateLogin(cred);
-        if (error) return alert(error.details[0].message);
+        if (error) {
+          const message = error.details[0].message
+          switch (message) {
+              case `"username" is not allowed to be empty`:
+                alert("Username is required.")
+                break;
+              case `"password" is not allowed to be empty`:
+                alert("Password is required.");
+                break;
+          }
+          return console.log(message);
+        } 
 
         const loginResponse = await axios.post(`${this.$backendAddress}/api/login`, cred);
         if (loginResponse.data.failed) return alert(loginResponse.data.reason);
