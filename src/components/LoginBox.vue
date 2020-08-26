@@ -1,6 +1,9 @@
 <template>
   <div>
     <div id="blur-panel"></div>
+    <transition name="alert">
+      <Alert v-bind:title="alertTitle" v-bind:message="alertMessage" v-if="alertActive" />
+    </transition>
     <RegisterBox v-if="appState.register" />
     <div id="main-login" v-if="!appState.register">
       <h1 style="margin-top:20px;">Login Below</h1>
@@ -17,6 +20,8 @@
 
 <script>
   import RegisterBox from "../components/RegisterBox";
+  import Alert from "../components/Alert"
+  import alertMixin from "../mixins/alertMixin"
   import axios from "axios";
   import Joi from "joi";
   import { mapActions, mapGetters } from "vuex";
@@ -25,7 +30,9 @@
     name: "LoginBox",
     components: {
       RegisterBox,
+      Alert,
     },
+    mixins: [alertMixin],
     computed: mapGetters(["appState"]),
     methods: {
       ...mapActions(["logIn", "triggerChange", "toggleRegister", "initialFetchTasks"]),
@@ -40,17 +47,17 @@
           const message = error.details[0].message
           switch (message) {
               case `"username" is not allowed to be empty`:
-                alert("Username is required.")
+                this.createAlert("Username Error", "Username is required.")
                 break;
               case `"password" is not allowed to be empty`:
-                alert("Password is required.");
+                this.createAlert("Password Error", "Password is required.");
                 break;
           }
-          return console.log(message);
+          return;
         } 
 
         const loginResponse = await axios.post(`${this.$backendAddress}/api/login`, cred);
-        if (loginResponse.data.failed) return alert(loginResponse.data.reason);
+        if (loginResponse.data.failed) return this.createAlert("Login Error", loginResponse.data.reason);
 
         sessionStorage.setItem("accessToken", loginResponse.data.access);
         sessionStorage.setItem("refreshToken", loginResponse.data.refresh);
@@ -74,6 +81,9 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../styles/_mixins.scss";
+  @include alertTransition();
+
   #blur-panel {
     width: 100vh;
     height: 100vh;

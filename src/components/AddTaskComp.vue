@@ -1,16 +1,27 @@
 <template>
-  <div id="add-task-container">
-    <input type="text" id="add-task-title" placeholder="Task title..." v-on:keyup.enter="focusOnDesc()" />
-    <textarea type="text" id="add-task-desc" placeholder="Task Description..." v-on:keyup.enter="addTaskE()" />
-    <div id="add-button" @click="addTaskE()">+</div>
+  <div>
+    <transition name="alert">
+      <Alert v-bind:title="alertTitle" v-bind:message="alertMessage" v-if="alertActive" />
+    </transition>
+    <div id="add-task-container">
+      <input type="text" id="add-task-title" placeholder="Task title..." v-on:keyup.enter="focusOnDesc()" />
+      <textarea type="text" id="add-task-desc" placeholder="Task Description..." v-on:keyup.enter="addTaskE()" />
+      <div id="add-button" @click="addTaskE()">+</div>
+    </div>
   </div>
 </template>
 
 <script>
+  import Alert from "../components/Alert"
+  import alertMixin from "../mixins/alertMixin"
   import { mapActions } from "vuex";
 
   export default {
     name: "AddTaskComp",
+    components: {
+      Alert,
+    },
+    mixins: [alertMixin],
     data() {
       return {
         user: this.$store.getters.getUser,
@@ -24,7 +35,7 @@
         const title = document.getElementById("add-task-title").value;
         let description = document.getElementById("add-task-desc").value;
 
-        if (title.length < 3) return alert("Task title must be at least 3 characters long.");
+        if (title.length < 3) return this.createAlert("Invalid Title", "Task title must be at least 3 characters long.");
         if (!description) description = " ";
 
         this.addTask({ title, description, userId, createdAt: new Date().toString() });
@@ -40,6 +51,9 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../styles/_mixins.scss";
+  @include alertTransition();
+
   #add-task-container {
     position: absolute;
     left: 75px;

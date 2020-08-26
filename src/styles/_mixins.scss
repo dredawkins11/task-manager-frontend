@@ -3,3 +3,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@mixin alertTransition {
+
+  .alert-enter-active,
+  .alert-leave-active {
+    transition: 0.2s;
+  }
+
+  .alert-enter,
+  .alert-leave-to {
+    opacity: 0;
+  }
+}

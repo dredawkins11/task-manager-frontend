@@ -1,50 +1,61 @@
 <template>
-  <div class="task-box" v-bind:class="{ 'task-box-done': task.completed }" :ref="task.title">
-    <img src="@/assets/check-mark-empty.svg" class="check" @click="markComplete(task)" v-show="!task.completed" />
-    <img src="@/assets/check-mark-filled.svg" class="check" @click="markComplete(task)" v-show="task.completed" />
-    <div class="title" v-show="!editMode">{{ task.title }}</div>
-    <div class="desc" v-show="!editMode">{{ task.description }}</div>
-    <!-- <img src="@/assets/x-icon-filled.svg" class="delete-button" @click="deleteTaskE(task)"/> -->
-    <div class="date">{{ getDate(task) }}</div>
-    <img src="@/assets/edit-icon-empty.svg" alt="edit" class="edit-button" v-show="!editMode" @click="startEdit()" />
+  <div>
+    <transition name="alert">
+      <Alert v-bind:title="alertTitle" v-bind:message="alertMessage" v-if="alertActive" />
+    </transition>
+    <div class="task-box" v-bind:class="{ 'task-box-done': task.completed }" :ref="task.title">
+      <img src="@/assets/check-mark-empty.svg" class="check" @click="markComplete(task)" v-show="!task.completed" />
+      <img src="@/assets/check-mark-filled.svg" class="check" @click="markComplete(task)" v-show="task.completed" />
+      <div class="title" v-show="!editMode">{{ task.title }}</div>
+      <div class="desc" v-show="!editMode">{{ task.description }}</div>
+      <div class="date">{{ getDate(task) }}</div>
+      <img src="@/assets/edit-icon-empty.svg" alt="edit" class="edit-button" v-show="!editMode" @click="startEdit()" />
 
-    <input type="text" class="title-edit" v-show="editMode" />
-    <textarea class="desc-edit" v-show="editMode" />
-    <img src="@/assets/edit-icon-filled.svg" class="cancel-button" v-show="editMode" @click="cancelEdit()" />
-    <img src="@/assets/check-mark.svg" alt="save" class="save-button" v-if="editMode" @click="completeEdit(task)" />
-    <svg class="delete-button" @click="deleteTask(task._id)" viewBox="71.365 171.684 257.033 256.442" xmlns="http://www.w3.org/2000/svg">
-      <g transform="matrix(1, 0, 0, 1, -303.109013, 10.459992)">
-        <line
-          style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke-width: 54px; stroke: rgb(0, 0, 0);"
-          x1="403.109"
-          y1="389.54"
-          x2="603.109"
-          y2="189.54"
-        />
-        <line
-          style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke-width: 54px; stroke: rgb(0, 0, 0);"
-          x1="403.109"
-          y1="189.54"
-          x2="603.109"
-          y2="389.54"
-        />
-      </g>
-      <g>
-        <line style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke-width: 43px;" x1="100" y1="400" x2="300" y2="200" />
-        <line style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke-width: 43px;" x1="100" y1="200" x2="300" y2="400" />
-      </g>
-      <rect x="71.365" y="171.684" width="257.033" height="256.442" rx="5" ry="5" style="fill: none;" />
-    </svg>
+      <input type="text" class="title-edit" v-show="editMode" />
+      <textarea class="desc-edit" v-show="editMode" />
+      <img src="@/assets/edit-icon-filled.svg" class="cancel-button" v-show="editMode" @click="cancelEdit()" />
+      <img src="@/assets/check-mark.svg" alt="save" class="save-button" v-if="editMode" @click="completeEdit(task)" />
+      <svg class="delete-button" @click="deleteTask(task._id)" viewBox="71.365 171.684 257.033 256.442" xmlns="http://www.w3.org/2000/svg">
+        <g transform="matrix(1, 0, 0, 1, -303.109013, 10.459992)">
+          <line
+            style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke-width: 54px; stroke: rgb(0, 0, 0);"
+            x1="403.109"
+            y1="389.54"
+            x2="603.109"
+            y2="189.54"
+          />
+          <line
+            style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke-width: 54px; stroke: rgb(0, 0, 0);"
+            x1="403.109"
+            y1="189.54"
+            x2="603.109"
+            y2="389.54"
+          />
+        </g>
+        <g>
+          <line style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke-width: 43px;" x1="100" y1="400" x2="300" y2="200" />
+          <line style="stroke-linecap: round; stroke-miterlimit: 3; stroke-linejoin: round; stroke-width: 43px;" x1="100" y1="200" x2="300" y2="400" />
+        </g>
+        <rect x="71.365" y="171.684" width="257.033" height="256.442" rx="5" ry="5" style="fill: none;" />
+      </svg>
+    </div>
   </div>
 </template>
 
 <script>
+  import Alert from "../components/Alert"
+  import alertMixin from "../mixins/alertMixin"
+  import tokenMixin from "../mixins/tokenMixin"
   import { mapActions } from "vuex";
   import axios from "axios";
 
   export default {
     name: "Task",
     props: ["task"],
+    components: {
+      Alert,
+    },
+    mixins: [tokenMixin, alertMixin],
     data() {
       return {
         editMode: false,
@@ -66,10 +77,10 @@
         }
       },
       async completeEdit(task) {
-        const titleEdit = this.$el.children[6];
-        const descriptionEdit = this.$el.children[7];
+        const titleEdit = this.$el.children[0].children[6];
+        const descriptionEdit = this.$el.children[0].children[7];
 
-        if (titleEdit.value.length < 3) return alert("Title must be 3 or more characters long.");
+        if (titleEdit.value.length < 3) return this.createAlert("Invalid Title", "Task title must be 3 or more characters long.");
 
         task.title = titleEdit.value;
         task.description = descriptionEdit.value ? descriptionEdit.value : " ";
@@ -87,22 +98,6 @@
 
         this.editMode = false;
       },
-      async refreshToken() {
-        try {
-          let res = await axios.post(`${this.$backendAddress}/api/login/refresh`, {
-            token: sessionStorage.getItem("refreshToken"),
-          });
-          sessionStorage.setItem("accessToken", res.data.accessToken);
-          axios.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.getItem("accessToken")}`;
-        } catch (err) {
-          console.log(err);
-        }
-      },
-      isTokenExpired() {
-        const token = sessionStorage.getItem("accessToken");
-        const expireTime = JSON.parse(atob(token.split(".")[1])).exp;
-        return expireTime <= Date.now() / 1000;
-      },
       getDate(task) {
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const rawDate = new Date(task.createdAt);
@@ -116,10 +111,10 @@
       startEdit() {
         this.editMode = true;
 
-        const titleText = this.$el.children[2].innerText;
-        const descriptionText = this.$el.children[3].innerText;
-        const titleEdit = this.$el.children[6];
-        const descriptionEdit = this.$el.children[7];
+        const titleText = this.$el.children[0].children[2].innerText;
+        const descriptionText = this.$el.children[0].children[3].innerText;
+        const titleEdit = this.$el.children[0].children[6];
+        const descriptionEdit = this.$el.children[0].children[7];
         titleEdit.value = titleText;
         descriptionEdit.value = descriptionText;
       },
@@ -131,6 +126,9 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../styles/_mixins.scss";
+  @include alertTransition();
+
   .task-box {
     @include fontSettings();
     position: relative;

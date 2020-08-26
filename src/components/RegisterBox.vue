@@ -1,28 +1,39 @@
 <template>
-  <div id="main-register">
-    <h1>Register Below</h1>
-    <div id="register-username-label">Username:</div>
-    <form autocomplete="new-password">
-      <input type="text" name="username" id="username-text-register" class="entry" autocomplete="new-password" />
-      <br />
-      <div id="register-password-label">Password:</div>
-      <input type="password" name="password" id="password-text-register" class="entry" autocomplete="new-password" />
-      <br />
-      <div id="register-password-label2">Repeat Password:</div>
-      <input type="password" name="2nd-password" id="password-text-register2" class="entry" autocomplete="new-password" />
-      <div id="register-button" @click="registerReqE">Register</div>
-      <div id="login-text" @click="toggleRegister()">Already have an account? Log in <span id="login-link">here.</span></div>
-    </form>
+  <div>  
+    <transition name="alert">
+      <Alert v-bind:title="alertTitle" v-bind:message="alertMessage" v-if="alertActive" />
+    </transition>
+    <div id="main-register">
+      <h1>Register Below</h1>
+      <div id="register-username-label">Username:</div>
+      <form autocomplete="new-password">
+        <input type="text" name="username" id="username-text-register" class="entry" autocomplete="new-password" />
+        <br />
+        <div id="register-password-label">Password:</div>
+        <input type="password" name="password" id="password-text-register" class="entry" autocomplete="new-password" />
+        <br />
+        <div id="register-password-label2">Repeat Password:</div>
+        <input type="password" name="2nd-password" id="password-text-register2" class="entry" autocomplete="new-password" />
+        <div id="register-button" @click="registerReqE">Register</div>
+        <div id="login-text" @click="toggleRegister()">Already have an account? Log in <span id="login-link">here.</span></div>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
+  import { mapActions } from "vuex";
+  import Alert from "../components/Alert"
+  import alertMixin from "../mixins/alertMixin"
   import Joi from "joi";
   import axios from "axios";
-  import { mapActions } from "vuex";
 
   export default {
     name: "RegisterBox",
+    components: {
+      Alert,
+    },
+    mixins: [alertMixin],
     methods: {
       ...mapActions(["toggleRegister", "logIn", "triggerChange"]),
       async registerReqE() {
@@ -33,40 +44,40 @@
           };
           const password2 = document.getElementById("password-text-register2").value;
 
-          if (cred.password != password2) return alert("Passwords do not match.");
-
           const { error } = this.validateRegister(cred);
           if (error) {
             const message = error.details[0].message;
             switch (message) {
               case `"username" is not allowed to be empty`:
-                alert("Username is required.")
+                this.createAlert("Username Error", "Username is required.")
                 break;
               case `"username" length must be at least 3 characters long`:
-                alert("Your username must be at least 3 characters long.")
+                this.createAlert("Username Error", "Your username must be at least 3 characters long.")
                 break;
               case `"username" length must be less than or equal to 32 characters long`:
-                alert("Your username must be at shorter than 32 characters.")
+                this.createAlert("Username Error", "Your username must be at shorter than 32 characters.")
                 break;
               case `"password" is not allowed to be empty`:
-                alert("Password is required.");
+                this.createAlert("Password Error", "Password is required.");
                 break;
               case `"password" length must be at least 3 characters long`:
-                alert("Your password must be at least 3 charactoers long.")
+                this.createAlert("Password Error", "Your password must be at least 3 charactoers long.")
                 break;
               case `"password" length must be less than or equal to 32 characters long`:
-                alert("Your password must be shorter than 32 characters.")
+                this.createAlert("Password Error", "Your password must be shorter than 32 characters.")
                 break;
             }
-            if (message.includes("number pattern")) alert("Password must contain at least one number.")
-            if (message.includes("uppercase letter pattern")) alert("Password must contain at least one uppercase letter.")
-            if (message.includes("lowercase letter pattern")) alert("Password must contain at least one lowercase letter.")
-            if (message.includes("alphanumeric pattern")) alert("Username must begin with a letter or number.")
+            if (message.includes("number pattern")) this.createAlert("Password Error", "Password must contain at least one number.")
+            if (message.includes("uppercase letter pattern")) this.createAlert("Password Error", "Password must contain at least one uppercase letter.")
+            if (message.includes("lowercase letter pattern")) this.createAlert("Password Error", "Password must contain at least one lowercase letter.")
+            if (message.includes("alphanumeric pattern")) this.createAlert("Username Error", "Username must begin with a letter or number.")
             return;
           }
 
+          if (cred.password != password2) return this.createAlert("Password Error", "Passwords do not match.");
+
           const user = await axios.post(`${this.$backendAddress}/api/users`, cred);
-          if (!user.data) return alert("A user with that username already exists.");
+          if (!user.data) return this.createAlert("Username Error", "A user with that username already exists.");
 
           let res = await axios.post(`${this.$backendAddress}/api/login`, cred);
           sessionStorage.setItem("accessToken", res.data.access);
@@ -99,6 +110,9 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../styles/_mixins.scss";
+  @include alertTransition();
+
   #main-register {
     position: fixed;
     top: 40%;
