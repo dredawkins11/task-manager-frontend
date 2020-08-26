@@ -5,10 +5,12 @@ const backendAddress = process.env.NODE_ENV == "production" ? "https://task-mana
 
 const state = {
   tasks: [],
+  displayTasks: [],
 };
 
 const getters = {
   allTasks: (state) => state.tasks,
+  displayTasks: (state) => state.displayTasks,
 };
 
 const actions = {
@@ -122,7 +124,7 @@ const mutations = {
     });
   },
   searchTasksM: (state, search) => {
-    state.tasks = state.tasks.filter((task) => {
+    state.displayTasks = state.tasks.filter((task) => {
       return task.title.includes(search);
     });
   },

@@ -1,8 +1,12 @@
 <template>
   <div id="main">
     <SideBar v-bind:class="{ blur: !appState.log_state }" />
+    <div id="clear-search-text" @click="endSearch()" v-if="searching">
+        Clear Search
+      </div>
     <div id="task-page" v-bind:class="{ blur: !appState.log_state }">
-      <TaskContainer v-bind:tasks="allTasks" />
+      <TaskContainer v-bind:searching="searching" v-bind:tasks="allTasks" v-if="!searching" />
+      <TaskContainer v-bind:tasks="displayTasks" v-if="searching" />
     </div>
     <div id="login-page">
       <LoginBox v-if="!appState.log_state" />
@@ -23,9 +27,17 @@
       TaskContainer,
       LoginBox,
     },
-    computed: mapGetters(["allTasks", "appState"]),
+    data() {
+      return {
+        searching: false,
+      }
+    },
+    computed: mapGetters(["allTasks", "displayTasks", "appState"]),
     methods: {
       ...mapActions(["fetchTasks", "fetchUser"]),
+      endSearch() {
+        this.searching = false;
+      }
     },
     async created() {
       if (this.appState.log_state) {
@@ -34,6 +46,8 @@
     },
     mounted() {
       this.$root.$on("refreshTasks", async () => await this.fetchTasks());
+      this.$root.$on("searching", () => this.searching = true);
+      this.$root.$on("endSearch", () => this.searching = false);
       console.log(process.env.NODE_ENV);
     },
   };
@@ -65,6 +79,21 @@
     z-index: -2;
     height: calc(100vh - 25px);
     white-space: nowrap;
+  }
+  #clear-search-text {
+    position: absolute;
+    top: 6px;
+    left: 110px;
+    z-index: 50;
+    padding: 2px;
+    border: 1px solid $accent;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: lighter;
+    font-style: italic;
+    cursor: pointer;
+    color: $lightText;
+    background: $accent;
   }
   #log-out-comp {
     display: inline-block;

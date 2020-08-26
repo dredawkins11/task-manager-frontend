@@ -1,7 +1,7 @@
 <template>
   <div id="search-container">
     <input id="search-input" type="text" placeholder="Search for task..." v-on:keyup.enter="searchE()" />
-    <div id="search-button" @click="searchE()">GO</div>
+    <!-- <div id="search-button" @click="searchE()">GO</div> -->
     <div id="clear-search" @click="clearSearchE()">X</div>
   </div>
 </template>
@@ -16,13 +16,20 @@
       searchE() {
         const searchValue = document.getElementById("search-input").value;
         this.searchTasks(searchValue);
-        document.getElementById("search-input").value = "";
+        this.$root.$emit("searching");
       },
       clearSearchE() {
         document.getElementById("search-input").value = "";
         this.$root.$emit("refreshTasks");
+        this.$root.$emit("endSearch");
       },
     },
+    mounted() {
+      document.getElementById("search-container").addEventListener("keyup", () => {
+        console.log("change")
+        this.searchE()
+      })
+    }
   };
 </script>
 
@@ -43,7 +50,7 @@
   }
   #search-input {
     display: inline-block;
-    width: 90%;
+    width: 95%;
     height: 30px;
     padding: 0.3rem;
     margin-left: 10px;
@@ -75,7 +82,7 @@
   }
   #clear-search {
     position: absolute;
-    left: 85%;
+    left: 90%;
     margin-left: 10px;
     font-size: 20px;
     font-weight: 100;

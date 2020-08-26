@@ -1,14 +1,14 @@
 <template>
-  <div id="task-list">
-    <div v-show="tasksEmpty" id="no-tasks-message-container">
-      <div id="no-tasks-message">
-        It seems you dont have any tasks. Use the "+" icon on the sidebar to create a task and get started.
+    <div id="task-list">
+      <div v-show="tasksEmpty" id="no-tasks-message-container">
+        <div id="no-tasks-message">
+          It seems you dont have any tasks. Use the "+" icon on the sidebar to create a task and get started.
+        </div>
+      </div>
+      <div v-for="task in tasks" :key="tasks.indexOf(task)">
+        <Task v-bind:task="task" />
       </div>
     </div>
-    <div v-for="task in tasks" :key="tasks.indexOf(task)">
-      <Task v-bind:task="task" />
-    </div>
-  </div>
 </template>
 
 <script>
@@ -23,6 +23,7 @@
     data() {
       return {
         tasksEmpty: true,
+        searching: false,
       };
     },
     watch: {
@@ -31,6 +32,15 @@
         if (this.tasks.length !== 0) this.tasksEmpty = false;
       },
     },
+    methods: {
+      endSearch() {
+        this.$root.$emit("endSearch");
+      }
+    },
+    mounted() {
+      this.$root.$on("searching", () => this.searching = true)
+      this.$root.$on("endSearch", () => this.searching = false)
+    }
   };
 </script>
 
