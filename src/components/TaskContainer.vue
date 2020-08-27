@@ -48,7 +48,6 @@
   #task-list {
     display: flex;
     position: relative;
-    z-index: -1;
     margin: auto;
 
     flex-flow: row wrap;
@@ -58,7 +57,7 @@
     overflow: scroll;
 
     height: 95vh;
-    width: 90vw;
+    width: 95vw;
 
     cursor: default;
   }

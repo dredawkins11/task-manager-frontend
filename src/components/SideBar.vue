@@ -92,6 +92,12 @@
         this.closeAllActive();
         this.searchActive = true;
       });
+      this.$root.$on("logging-out", () => {
+        this.menuActive = false;
+        this.addActive = false;
+        this.sortActive = false;
+        this.searchActive = false;
+      })
     },
   };
 </script>
@@ -103,6 +109,7 @@
     flex-flow: column nowrap;
     align-items: center;
     left: 0;
+    z-index: 3;
     width: 75px;
     height: 100vh;
     background-color: $tertiary;

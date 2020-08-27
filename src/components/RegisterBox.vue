@@ -4,7 +4,7 @@
       <Alert v-bind:title="alertTitle" v-bind:message="alertMessage" v-if="alertActive" />
     </transition>
     <div id="main-register">
-      <h1>Register Below</h1>
+      <h1 id="register-title">Register Below</h1>
       <div id="register-username-label">Username:</div>
       <form autocomplete="new-password">
         <input type="text" name="username" id="username-text-register" class="entry" autocomplete="new-password" />
@@ -12,7 +12,7 @@
         <div id="register-password-label">Password:</div>
         <input type="password" name="password" id="password-text-register" class="entry" autocomplete="new-password" />
         <br />
-        <div id="register-password-label2">Repeat Password:</div>
+        <div id="register-password-label2">Repeat Password: </div>
         <input type="password" name="2nd-password" id="password-text-register2" class="entry" autocomplete="new-password" />
         <div id="register-button" @click="registerReqE">Register</div>
         <div id="login-text" @click="toggleRegister()">Already have an account? Log in <span id="login-link">here.</span></div>
@@ -120,14 +120,14 @@
     transform: translate(-50%, -50%);
     width: 500px;
     height: 250px;
-    border: 2px solid;
-    border-top-color: $secondary;
-    border-right-color: $secondary;
-    border-left-color: $darkText;
-    border-bottom-color: $darkText;
+    border: 2px solid $tertiary;
+    border-radius: 10px;
+    box-shadow: -2px 2px 0px 2px rgba(0, 0, 0, 1);
     background: $tertiary;
     color: $lightText;
-    background-color: $tertiary;
+  }
+  #register-title {
+    text-shadow: 1px 2px 0px #000000;
   }
   #username-text-register {
     position: absolute;
@@ -138,7 +138,7 @@
   }
   #register-username-label {
     position: absolute;
-    left: 110px;
+    left: 109px;
     top: 70px;
     width: 80px;
     height: 20px;
@@ -170,7 +170,7 @@
   }
   #register-password-label2 {
     position: absolute;
-    left: 50px;
+    left: 45px;
     top: 130px;
     width: 150px;
     height: 20px;
@@ -183,16 +183,22 @@
     top: 170px;
     width: 90px;
     height: 30px;
-    line-height: 30px;
+    line-height: 32px;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
+    border: 1px solid $primary ;
+    border-radius: 5px;
+    cursor: pointer;
     color: $lightText;
     background-color: $primary;
-  }
-  #register-button:hover {
-    cursor: pointer;
-    transform: scale(1.05);
+    transition: background .2s, border-color .2s, color .2s;
+
+    &:hover {
+      background: $lightText;
+      border-color: $lightText;
+      color: $darkText;
+    }
   }
   #login-text {
     position: absolute;
@@ -205,9 +211,11 @@
   #login-link {
     color: $primary;
     text-decoration-line: underline;
-  }
-  #login-link:hover {
-    color: $lightText;
     cursor: pointer;
+    transition: color .2s;
+
+    &:hover {
+      color: $lightText
+    }
   }
 </style>

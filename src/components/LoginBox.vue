@@ -4,9 +4,10 @@
     <transition name="alert">
       <Alert v-bind:title="alertTitle" v-bind:message="alertMessage" v-if="alertActive" />
     </transition>
+    <Loader v-if="loading" />
     <RegisterBox v-if="appState.register" />
     <div id="main-login" v-if="!appState.register">
-      <h1 style="margin-top:20px;">Login Below</h1>
+      <h1 id="login-title">Login Below</h1>
       <div id="login-username-label">Username:</div>
       <input type="text" name="username" id="username-text-login" class="entry" autocomplete="new-password" />
       <br />
@@ -19,6 +20,7 @@
 </template>
 
 <script>
+  import Loader from "../components/Loader"
   import RegisterBox from "../components/RegisterBox";
   import Alert from "../components/Alert"
   import alertMixin from "../mixins/alertMixin"
@@ -31,9 +33,15 @@
     components: {
       RegisterBox,
       Alert,
+      Loader,
     },
     mixins: [alertMixin],
     computed: mapGetters(["appState"]),
+    data() {
+      return {
+        loading: false,
+      }
+    },
     methods: {
       ...mapActions(["logIn", "triggerChange", "toggleRegister", "initialFetchTasks"]),
       async loginReqE() {
@@ -56,14 +64,22 @@
           return;
         } 
 
+        document.getElementById("main-login").classList.add("blurred")
+        this.loading = true;
         const loginResponse = await axios.post(`${this.$backendAddress}/api/login`, cred);
-        if (loginResponse.data.failed) return this.createAlert("Login Error", loginResponse.data.reason);
+        if (loginResponse.data.failed) {
+          this.loading = false;
+          document.getElementById("main-login").classList.remove("blurred")
+          return this.createAlert("Login Error", loginResponse.data.reason);
+        }
 
         sessionStorage.setItem("accessToken", loginResponse.data.access);
         sessionStorage.setItem("refreshToken", loginResponse.data.refresh);
         this.logIn();
         this.triggerChange();
         this.initialFetchTasks();
+        this.loading = false;
+        document.getElementById("main-login").classList.remove("blurred")
       },
       validateLogin(cred) {
         const schema = Joi.object({
@@ -96,14 +112,15 @@
     transform: translate(-50%, -50%);
     width: 500px;
     height: 220px;
-    border: 2px solid;
-    border-top-color: $secondary;
-    border-right-color: $secondary;
-    border-left-color: $darkText;
-    border-bottom-color: $darkText;
+    border: 2px solid $tertiary;
+    border-radius: 10px;
+    box-shadow: -2px 2px 0px 2px rgba(0, 0, 0, 1);
     background: $tertiary;
     color: $lightText;
-    background-color: $tertiary;
+  }
+  #login-title {
+    margin-top: 20px;
+    text-shadow: 1px 2px 0px #000000;
   }
   #username-text-login {
     position: absolute;
@@ -142,17 +159,23 @@
     left: 220px;
     top: 140px;
     width: 60px;
-    height: 30px;
+    height: 32px;
     line-height: 30px;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
+    border: 1px solid $primary ;
+    border-radius: 5px;
+    cursor: pointer;
     color: $lightText;
     background-color: $primary;
-  }
-  #login-button:hover {
-    cursor: pointer;
-    transform: scale(1.05);
+    transition: background .2s, border-color .2s, color .2s;
+
+    &:hover {
+      background: $lightText;
+      border-color: $lightText;
+      color: $darkText;
+    }
   }
   #register-text {
     position: absolute;
@@ -165,10 +188,15 @@
   #register-link {
     color: $primary;
     text-decoration-line: underline;
-  }
-  #register-link:hover {
-    color: $lightText;
     cursor: pointer;
+    transition: color .2s;
+
+    &:hover {
+      color: $lightText
+    }
+  }
+  .blurred {
+    filter: blur(5px);
   }
   .login-enter-active,
   .login-leave-active {

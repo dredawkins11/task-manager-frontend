@@ -20,6 +20,7 @@
         sessionStorage.removeItem("accessToken");
         sessionStorage.removeItem("refreshToken");
         this.triggerChange();
+        this.$root.$emit("logging-out")
       },
     },
   };

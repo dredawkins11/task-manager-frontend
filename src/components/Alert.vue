@@ -31,7 +31,7 @@
     top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 100;
+    z-index: 4;
     width: 300px;
     height: 100px;
     text-align: center;

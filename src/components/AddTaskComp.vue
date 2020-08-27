@@ -56,7 +56,7 @@
 
   #add-task-container {
     position: absolute;
-    left: 75px;
+    left: 79px;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
@@ -64,10 +64,11 @@
     width: 500px;
     height: 300px;
     padding: 10px;
-    border: 2px solid $darkText;
-    border-top-color: $secondary;
-    border-right-color: $secondary;
-    background-color: $tertiary;
+    border: 2px solid $tertiary;
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    box-shadow: -2px 2px 0px 2px rgba(0, 0, 0, 1);
+    background: $tertiary;
   }
   #add-task-box {
     position: relative;

@@ -146,7 +146,7 @@
     &:hover {
       background: $accent;
       border-color: $accent;
-      box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
+      box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.7);
     }
     .title {
       position: absolute;

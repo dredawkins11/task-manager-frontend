@@ -26,10 +26,12 @@
   html,
   body {
     position: relative;
-    z-index: -3;
+    z-index: -5;
     margin: 0;
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
+    overflow-y: show;
   }
   ::-webkit-scrollbar {
     width: 5px;

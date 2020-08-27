@@ -44,14 +44,13 @@
 <style scoped lang="scss">
   #menu-body {
     position: absolute;
-    left: 75px;
+    left: 79px;
     width: 300px;
     height: 120px;
-    border: 2px solid;
-    border-top-color: $secondary;
-    border-right-color: $secondary;
-    border-left-color: $darkText;
-    border-bottom-color: $darkText;
+    border: 2px solid $tertiary;
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    box-shadow: -2px 2px 0px 2px rgba(0, 0, 0, 1);
     background: $tertiary;
   }
   #prof-icon {

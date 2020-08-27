@@ -34,7 +34,7 @@
     },
     computed: mapGetters(["allTasks", "displayTasks", "appState"]),
     methods: {
-      ...mapActions(["fetchTasks", "fetchUser"]),
+      ...mapActions(["fetchTasks", "clearTasks"]),
       endSearch() {
         this.searching = false;
       }
@@ -48,6 +48,7 @@
       this.$root.$on("refreshTasks", async () => await this.fetchTasks());
       this.$root.$on("searching", () => this.searching = true);
       this.$root.$on("endSearch", () => this.searching = false);
+      this.$root.$on("logging-out", () => this.clearTasks())
       console.log(process.env.NODE_ENV);
     },
   };
@@ -57,7 +58,6 @@
   html,
   body {
     position: relative;
-    z-index: -3;
     margin: 0;
     width: 100vw;
     height: 100vh;
@@ -76,7 +76,6 @@
     top: 25px;
     left: 100px;
     right: 25px;
-    z-index: -2;
     height: calc(100vh - 25px);
     white-space: nowrap;
   }
@@ -84,7 +83,7 @@
     position: absolute;
     top: 6px;
     left: 110px;
-    z-index: 50;
+    z-index: 2;
     padding: 2px;
     border: 1px solid $accent;
     border-radius: 5px;
